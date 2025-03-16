@@ -1,0 +1,16 @@
+<odoo noupdate="1">
+    <record id="disease_cataract" model="hr.hospital.disease">
+        <field name="name">Cataract</field>
+        <field name="description">A clouding of the normally clear lens of the eye, leading to vision impairment.</field>
+    </record>
+
+    <record id="disease_covid" model="hr.hospital.disease">
+        <field name="name">COVID-19</field>
+        <field name="description">A contagious respiratory illness caused by the coronavirus.</field>
+    </record>
+
+    <record id="disease_diabetes" model="hr.hospital.disease">
+        <field name="name">Diabetes</field>
+        <field name="description">A metabolic disorder characterized by high blood sugar levels over a prolonged period.</field>
+    </record>
+</odoo>
