@@ -1,7 +1,4 @@
-import logging
 from odoo import models, fields
-
-_logger = logging.getLogger(__name__)
 
 
 class HRHPatientVisit(models.Model):
@@ -9,13 +6,13 @@ class HRHPatientVisit(models.Model):
     _description = 'Patient visit'
 
     patient_id = fields.Many2one(
-        'hr.hospital.patient',
-        string="Patient", required=True)
+        comodel_name='hr.hospital.patient',
+        string="Patient")
     doctor_id = fields.Many2one(
-        'hr.hospital.doctor',
-        string="Doctor", required=True)
+        comodel_name='hr.hospital.doctor',
+        string="Doctor")
     disease_id = fields.Many2one(
-        'hr.hospital.disease',
+        comodel_name='hr.hospital.disease',
         string="Disease")
     visit_date = fields.Datetime(
         string="Visit Date",
