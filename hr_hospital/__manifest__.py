@@ -5,7 +5,7 @@
     'website': 'https://github.com/SergeyShi/odoo_school/',
     'category': 'Human Resources',
     'license': 'OPL-1',
-    'version': '17.0.1.0.0',
+    'version': '17.0.1.1.0',
 
     'depends': [
         'base',
@@ -21,6 +21,7 @@
         'views/hr_hospital_patient_views.xml',
         'views/hr_hospital_disease_views.xml',
         'views/hr_hospital_patient_visit_views.xml',
+        'wizard/hr_hospital_patient_doctor_wizard_views.xml',
         'data/hr_hospital_disease_data.xml',
     ],
     'demo': [

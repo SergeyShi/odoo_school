@@ -1,4 +1,5 @@
 <odoo>
+    <!-- Дерево для перегляду візитів -->
     <record id="hr_hospital_visit_tree_view" model="ir.ui.view">
         <field name="name">hr.hospital.patient.visit.tree</field>
         <field name="model">hr.hospital.patient.visit</field>
@@ -12,6 +13,7 @@
         </field>
     </record>
 
+    <!-- Форма для перегляду та редагування візитів -->
     <record id="hr_hospital_visit_form_view" model="ir.ui.view">
         <field name="name">hr.hospital.patient.visit.form</field>
         <field name="model">hr.hospital.patient.visit</field>
@@ -29,9 +31,17 @@
         </field>
     </record>
 
+    <!-- Дія для відкриття візитів -->
     <record id="hr_hospital_visit_action" model="ir.actions.act_window">
         <field name="name">Patient Visits</field>
         <field name="res_model">hr.hospital.patient.visit</field>
         <field name="view_mode">tree,form</field>
     </record>
+
+    <!-- Пункт меню для візитів -->
+    <menuitem id="hr_hospital_visit_menu"
+              name="Visits"
+              parent="hr_hospital_menu_list"
+              action="hr_hospital_visit_action"
+              sequence="50"/>
 </odoo>

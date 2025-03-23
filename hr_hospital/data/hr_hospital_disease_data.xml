@@ -1,16 +1,28 @@
-<odoo noupdate="1">
-    <record id="disease_cataract" model="hr.hospital.disease">
-        <field name="name">Cataract</field>
-        <field name="description">A clouding of the normally clear lens of the eye, leading to vision impairment.</field>
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Основні хвороби -->
+    <record id="disease_infectious" model="hr.hospital.disease">
+        <field name="name">Інфекційні хвороби</field>
+    </record>
+    <record id="disease_chronic" model="hr.hospital.disease">
+        <field name="name">Хронічні хвороби</field>
     </record>
 
-    <record id="disease_covid" model="hr.hospital.disease">
-        <field name="name">COVID-19</field>
-        <field name="description">A contagious respiratory illness caused by the coronavirus.</field>
+    <!-- Підкатегорії -->
+    <record id="disease_flu" model="hr.hospital.disease">
+        <field name="name">Грип</field>
+        <field name="parent_id" ref="disease_infectious"/>
     </record>
-
+    <record id="disease_tuberculosis" model="hr.hospital.disease">
+        <field name="name">Туберкульоз</field>
+        <field name="parent_id" ref="disease_infectious"/>
+    </record>
     <record id="disease_diabetes" model="hr.hospital.disease">
-        <field name="name">Diabetes</field>
-        <field name="description">A metabolic disorder characterized by high blood sugar levels over a prolonged period.</field>
+        <field name="name">Діабет</field>
+        <field name="parent_id" ref="disease_chronic"/>
+    </record>
+    <record id="disease_hypertension" model="hr.hospital.disease">
+        <field name="name">Гіпертонія</field>
+        <field name="parent_id" ref="disease_chronic"/>
     </record>
 </odoo>

@@ -27,6 +27,24 @@
         </field>
     </record>
 
+    <record id="action_patient_update_doctor" model="ir.actions.server">
+        <field name="name">Change Personal Doctor</field>
+        <field name="model_id" ref="model_hr_hospital_patient"/>
+        <field name="binding_model_id" ref="model_hr_hospital_patient"/>
+        <field name="state">multi</field>
+        <field name="binding_view_types">list</field>
+        <field name="binding_type">action</field>
+        <field name="code">
+            action = {
+            'type': 'ir.actions.act_window',
+            'res_model': 'hr.hospital.patient.doctor.wizard',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {'active_ids': active_ids},
+            }
+        </field>
+    </record>
+
     <record id="hr_hospital_patient_action" model="ir.actions.act_window">
         <field name="name">Patients</field>
         <field name="res_model">hr.hospital.patient</field>

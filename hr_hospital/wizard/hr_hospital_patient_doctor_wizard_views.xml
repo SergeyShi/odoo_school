@@ -1,0 +1,32 @@
+<odoo>
+    <record id="hr_hospital_patient_doctor_wizard" model="ir.ui.view">
+        <field name="name">hr.hospital.patient.doctor.wizard.form</field>
+        <field name="model">hr.hospital.patient.doctor.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Mass Update Personal Doctor">
+                <group>
+                    <field name="doctor_id"/>
+                </group>
+                <footer>
+                    <button name="action_update_doctor" type="object" string="Apply" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_patient_doctor_wizard" model="ir.actions.act_window">
+        <field name="name">Change Personal Doctor</field>
+        <field name="res_model">hr.hospital.patient.doctor.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="hr_hospital_patient_doctor_wizard"/>
+        <field name="target">new</field>
+        <field name="context">{}</field>
+    </record>
+
+    <record id="action_patient_doctor_wizard_menu" model="ir.ui.menu">
+        <field name="name">Change Personal Doctor</field>
+        <field name="parent_id" ref="hr_hospital.menu_patient"/>
+        <field name="action" ref="action_patient_doctor_wizard"/>
+    </record>
+</odoo>
