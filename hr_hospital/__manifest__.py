@@ -16,13 +16,15 @@
     },
     'data': [
         'security/ir.model.access.csv',
+        'wizard/hr_hospital_patient_doctor_wizard_views.xml',
+        'wizard/hr_hospital_disease_report_wizard_views.xml',
         'views/hr_hospital_menu.xml',
         'views/hr_hospital_doctor_views.xml',
         'views/hr_hospital_patient_views.xml',
         'views/hr_hospital_disease_views.xml',
         'views/hr_hospital_patient_visit_views.xml',
-        'wizard/hr_hospital_patient_doctor_wizard_views.xml',
         'data/hr_hospital_disease_data.xml',
+        'data/hr_hospital_specialization_data.xml',
     ],
     'demo': [
         'demo/hr_hospital_demo.xml',

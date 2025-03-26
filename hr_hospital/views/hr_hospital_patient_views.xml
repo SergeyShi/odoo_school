@@ -1,5 +1,5 @@
 <odoo>
-     <record id="hr_hospital_patient_tree_view" model="ir.ui.view">
+    <record id="hr_hospital_patient_tree_view" model="ir.ui.view">
         <field name="name">hr.hospital.patient.tree</field>
         <field name="model">hr.hospital.patient</field>
         <field name="arch" type="xml">
@@ -19,29 +19,16 @@
                 <sheet>
                     <group>
                         <field name="name"/>
-                        <field name="birth_date"/>
+                        <field name="last_name"/>
+                        <field name="first_name"/>
                         <field name="doctor_id"/>
+                        <field name="birth_date"/>
+                        <field name="age"/>
+                        <field name="passport_data"/>
+                        <field name="contact_person"/>
                     </group>
                 </sheet>
             </form>
-        </field>
-    </record>
-
-    <record id="action_patient_update_doctor" model="ir.actions.server">
-        <field name="name">Change Personal Doctor</field>
-        <field name="model_id" ref="model_hr_hospital_patient"/>
-        <field name="binding_model_id" ref="model_hr_hospital_patient"/>
-        <field name="state">multi</field>
-        <field name="binding_view_types">list</field>
-        <field name="binding_type">action</field>
-        <field name="code">
-            action = {
-            'type': 'ir.actions.act_window',
-            'res_model': 'hr.hospital.patient.doctor.wizard',
-            'view_mode': 'form',
-            'target': 'new',
-            'context': {'active_ids': active_ids},
-            }
         </field>
     </record>
 
@@ -52,8 +39,8 @@
     </record>
 
     <menuitem id="hr_hospital_menu_patient"
-          name="Patients"
-          parent="hr_hospital_menu_list"
-          action="hr_hospital_patient_action"
-          sequence="40"/>
+              name="Patients"
+              parent="hr_hospital_menu_list"
+              action="hr_hospital_patient_action"
+              sequence="40"/>
 </odoo>

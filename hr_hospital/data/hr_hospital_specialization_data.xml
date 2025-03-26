@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="specialization_neurologist" model="hr.hospital.specialization">
+        <field name="name">Neurologist</field>
+    </record>
+    <record id="specialization_pediatrician" model="hr.hospital.specialization">
+        <field name="name">Pediatrician</field>
+    </record>
+    <record id="specialization_imunologist" model="hr.hospital.specialization">
+        <field name="name">Imunolog</field>
+    </record>
+    <record id="specialization_surgeon" model="hr.hospital.specialization">
+        <field name="name">Іurgeon</field>
+    </record>
+
+</odoo>

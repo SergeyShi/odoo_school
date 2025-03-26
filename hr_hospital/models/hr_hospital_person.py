@@ -5,15 +5,24 @@ class Person(models.AbstractModel):
     _name = 'hr.hospital.person'
     _description = 'Abstract Person Model'
 
+    name = fields.Char(
+        compute='_compute_name',
+    )
     last_name = fields.Char(
-        string="Surname",
-        required=True)
+        string="Last name")
+
     first_name = fields.Char(
-        string="Name",
-        required=True)
-    phone = fields.Char(string="Phone")
-    photo = fields.Image(string="Photo")
+        string="First name")
+
+    phone = fields.Char()
+
+    photo = fields.Image()
+
     gender = fields.Selection([
         ('male', 'Male'),
         ('female', 'Female')
-    ], string="Gender", required=True)
+    ],)
+
+    def _compute_name(self):
+        for record in self:
+            record.name = f'{record.first_name} {record.last_name}'

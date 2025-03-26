@@ -6,5 +6,5 @@ class HRHSpecialization(models.Model):
     _description = 'Doctor Specialization'
 
     name = fields.Char(
-        string="Назва спеціальності",
+        string="Specialization",
         required=True)

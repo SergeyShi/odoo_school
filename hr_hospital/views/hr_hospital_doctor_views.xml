@@ -8,7 +8,11 @@
                 <sheet>
                     <group>
                         <field name="name"/>
-                        <field name="profession"/>
+                        <field name="last_name"/>
+                        <field name="first_name"/>
+                        <field name="specialization_id"/>
+                        <field name="is_intern"/>
+                        <field name="mentor_id"/>
                     </group>
                 </sheet>
             </form>
@@ -21,7 +25,9 @@
         <field name="arch" type="xml">
             <tree>
                 <field name="name"/>
-                <field name="profession"/>
+                <field name="specialization_id"/>
+                <field name="is_intern"/>
+                <field name="mentor_id"/>
             </tree>
         </field>
     </record>

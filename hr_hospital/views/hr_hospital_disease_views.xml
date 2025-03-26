@@ -1,16 +1,22 @@
 <odoo>
-    <record id="hr_hospital_disease_tree_view" model="ir.ui.view">
-        <field name="name">hr.hospital.disease.tree</field>
+   <record id="hr_hospital_disease_tree_view" model="ir.ui.view">
+        <field name="name">Disease Tree</field>
         <field name="model">hr.hospital.disease</field>
-        <field name="arch" type="xml">
-            <tree>
-                <field name="name"/>
-            </tree>
-        </field>
+       <field name="arch" type="xml">
+           <tree>
+               <header>
+                   <button name="%(hr_hospital_disease_report_wizard_act_window)d"
+                           string="Generate report"
+                           type="action" class="btn-primary"/>
+               </header>
+               <field name="name"/>
+               <field name="parent_id"/>
+           </tree>
+       </field>
     </record>
 
     <record id="hr_hospital_disease_form_view" model="ir.ui.view">
-        <field name="name">hr.hospital.disease.form</field>
+        <field name="name">Disease Form</field>
         <field name="model">hr.hospital.disease</field>
         <field name="arch" type="xml">
             <form>
@@ -18,10 +24,21 @@
                     <group>
                         <field name="name"/>
                         <field name="description"/>
+                        <field name="parent_id"/>
                     </group>
                 </sheet>
             </form>
         </field>
+    </record>
+
+    <record id="hr_hospital_disease_report_wizard_act_window"
+            model="ir.actions.act_window">
+        <field name="name">Generate report</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hr.hospital.disease.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'active_ids': active_ids}</field>
     </record>
 
     <record id="hr_hospital_disease_action" model="ir.actions.act_window">
@@ -29,4 +46,11 @@
         <field name="res_model">hr.hospital.disease</field>
         <field name="view_mode">tree,form</field>
     </record>
+
+    <menuitem id="hr_hospital_menu_disease"
+              action="hr_hospital_disease_action"
+              parent="hr_hospital_menu_list"
+              name="Diseases" sequence="40"/>
+
 </odoo>
+

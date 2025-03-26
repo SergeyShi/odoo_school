@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-    <!-- Основні хвороби -->
     <record id="disease_infectious" model="hr.hospital.disease">
         <field name="name">Інфекційні хвороби</field>
     </record>
@@ -8,7 +7,6 @@
         <field name="name">Хронічні хвороби</field>
     </record>
 
-    <!-- Підкатегорії -->
     <record id="disease_flu" model="hr.hospital.disease">
         <field name="name">Грип</field>
         <field name="parent_id" ref="disease_infectious"/>

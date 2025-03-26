@@ -1,18 +1,25 @@
-from odoo import models, fields, api
+from odoo import models, fields
 
 
-class PatientDoctorWizard(models.TransientModel):
+class PatientWizard(models.TransientModel):
     _name = 'hr.hospital.patient.doctor.wizard'
-    _description = 'Wizard for Mass Update of Personal Doctor'
+    _description = 'Patient wizard'
 
     doctor_id = fields.Many2one(
         comodel_name='hr.hospital.doctor',
-        string='New Personal Doctor',
-        required=True)
+        required=True,
+        string='New doctor',
+    )
+    patient_ids = fields.Many2many(
+        comodel_name='hr.hospital.patient',
+    )
 
-    def action_update_doctor(self):
-        active_ids = self.env.context.get('active_ids', [])
-        if active_ids:
-            patients = self.env['hr.hospital.patient'].browse(active_ids)
-            patients.write({'doctor_id': self.doctor_id.id})
-        return {'type': 'ir.actions.act_window_close'}
+    def add_doctor(self):
+        self.ensure_one()
+        self.patient_ids.write({
+            'doctor_id': self.doctor_id.id, })
+
+    def default_get(self, fields_list):
+        res = super().default_get(fields_list)
+        res['patient_ids'] = [(6, 0, self.env.context.get('active_ids'))]
+        return res
