@@ -31,16 +31,6 @@
         </field>
     </record>
 
-    <record id="hr_hospital_disease_report_wizard_act_window"
-            model="ir.actions.act_window">
-        <field name="name">Generate report</field>
-        <field name="type">ir.actions.act_window</field>
-        <field name="res_model">hr.hospital.disease.report.wizard</field>
-        <field name="view_mode">form</field>
-        <field name="target">new</field>
-        <field name="context">{'active_ids': active_ids}</field>
-    </record>
-
     <record id="hr_hospital_disease_action" model="ir.actions.act_window">
         <field name="name">Diseases</field>
         <field name="res_model">hr.hospital.disease</field>
