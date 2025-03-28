@@ -14,11 +14,11 @@ class HRHDoctor(models.Model):
         comodel_name='hr.hospital.specialization',
         string="Спеціальність")
 
-    is_intern = fields.Boolean(string="Інтерн")
+    is_intern = fields.Boolean(string="Intern")
 
     mentor_id = fields.Many2one(
         comodel_name='hr.hospital.doctor',
-        string="Лікар-ментор",
+        string="Doctor-mentor",
         domain=[('is_intern', '=', False)])
 
     @api.constrains('mentor_id', 'is_intern')
