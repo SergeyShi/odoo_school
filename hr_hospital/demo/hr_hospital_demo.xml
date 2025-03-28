@@ -24,18 +24,24 @@
     <!-- Patients -->
     <record id="patient_alex" model="hr.hospital.patient">
         <field name="name">Oleksandr Oleksandrenko</field>
+        <field name="first_name">Oleksandr</field>
+        <field name="last_name">Oleksandrenko</field>
         <field name="birth_date">1990-06-15</field>
         <field name="doctor_id" ref="doctor_ivan"/>
     </record>
 
     <record id="patient_sophia" model="hr.hospital.patient">
         <field name="name">Sophia Kyivska</field>
+        <field name="first_name">Sophia</field>
+        <field name="last_name">Kyivska</field>
         <field name="birth_date">1985-02-23</field>
         <field name="doctor_id" ref="doctor_anna"/>
     </record>
 
     <record id="patient_maksim" model="hr.hospital.patient">
         <field name="name">Maksim Maksimenko</field>
+        <field name="first_name">Maksim</field>
+        <field name="last_name">Maksimenko</field>
         <field name="birth_date">2000-11-08</field>
         <field name="doctor_id" ref="doctor_petr"/>
     </record>

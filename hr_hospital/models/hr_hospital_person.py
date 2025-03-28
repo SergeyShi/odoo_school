@@ -8,11 +8,9 @@ class Person(models.AbstractModel):
     name = fields.Char(
         compute='_compute_name',
     )
-    last_name = fields.Char(
-        string="Last name")
+    last_name = fields.Char()
 
-    first_name = fields.Char(
-        string="First name")
+    first_name = fields.Char()
 
     phone = fields.Char()
 

@@ -1,4 +1,4 @@
-from odoo import models, fields, api, exceptions
+from odoo import models, fields, api, exceptions, _
 
 
 class HRHDoctor(models.Model):
@@ -25,8 +25,8 @@ class HRHDoctor(models.Model):
     def _check_mentor_assignment(self):
         for doctor in self:
             if doctor.is_intern and not doctor.mentor_id:
-                raise exceptions.ValidationError_(
-                    "The intern must have a mentor physician.")
+                raise exceptions.ValidationError(_(
+                    "The intern must have a mentor physician."))
             if doctor.mentor_id and doctor.mentor_id.is_intern:
-                raise exceptions.ValidationError_(
-                    "An intern cannot be a mentor.")
+                raise exceptions.ValidationError(_(
+                    "An intern cannot be a mentor."))

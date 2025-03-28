@@ -1,4 +1,4 @@
-from odoo import models, fields, api
+from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
 
 
@@ -42,7 +42,7 @@ class HRHDisease(models.Model):
     @api.constrains('parent_id')
     def _check_category_recursion(self):
         if not self._check_recursion():
-            raise ValidationError('You cannot create recursive categories.')
+            raise ValidationError(_('You cannot create recursive categories.'))
 
     @api.model
     def name_create(self, name):

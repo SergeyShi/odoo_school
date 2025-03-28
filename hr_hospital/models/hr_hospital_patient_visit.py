@@ -1,4 +1,4 @@
-from odoo import models, fields, api, exceptions
+from odoo import models, fields, api, exceptions, _
 
 
 class HRHPatientVisit(models.Model):
@@ -42,15 +42,15 @@ class HRHPatientVisit(models.Model):
             for visit in self:
                 if visit.visit_date and (
                         visit.scheduled_datetime or visit.doctor_id):
-                    raise exceptions.ValidationError_(
-                        "Can't change time or doctor")
+                    raise exceptions.ValidationError(_(
+                        "Can't change time or doctor"))
 
     @api.constrains('diagnosis_ids')
     def _check_delete_archival(self):
         for visit in self:
             if visit.diagnosis_ids:
-                raise exceptions.ValidationError_(
-                    "Can't delete or archive visits with diagnosis.")
+                raise exceptions.ValidationError(_(
+                    "Can't delete or archive visits with diagnosis."))
 
     @api.constrains('scheduled_datetime', 'doctor_id', 'patient_id')
     def _check_single_visit_per_day(self):
@@ -71,5 +71,5 @@ class HRHPatientVisit(models.Model):
                 ('id', '!=', visit.id)
             ])
             if same_day_visits:
-                raise exceptions.ValidationError_(
-                    "A patient cannot make an appointment with the same doctor more than once a day.")
+                raise exceptions.ValidationError(_(
+                    "A patient cannot make an appointment with the same doctor more than once a day."))
