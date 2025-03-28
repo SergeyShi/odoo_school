@@ -19,7 +19,7 @@ class HRHDoctor(models.Model):
     mentor_id = fields.Many2one(
         comodel_name='hr.hospital.doctor',
         string="Лікар-ментор",
-        domain="[('is_intern', '=', False)]")
+        domain=[('is_intern', '=', False)])
 
     @api.constrains('mentor_id', 'is_intern')
     def _check_mentor_assignment(self):
