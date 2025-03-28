@@ -12,7 +12,7 @@ class HRHDoctor(models.Model):
 
     specialization_id = fields.Many2one(
         comodel_name='hr.hospital.specialization',
-        string="Спеціальність")
+        string="Specialization")
 
     is_intern = fields.Boolean(string="Intern")
 
