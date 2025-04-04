@@ -6,8 +6,8 @@ class HRHDoctor(models.Model):
     _inherit = 'hr.hospital.person'
     _description = 'Doctor'
 
-    name = fields.Char()
     last_name = fields.Char()
+
     first_name = fields.Char()
 
     specialization_id = fields.Many2one(
@@ -21,6 +21,22 @@ class HRHDoctor(models.Model):
         string="Doctor-mentor",
         domain=[('is_intern', '=', False)])
 
+    intern_ids = fields.One2many(
+        comodel_name='hr.hospital.doctor',
+        inverse_name='mentor_id',
+        string='Interns')
+
+    def action_create_visit(self):
+        return {
+            "type": "ir.actions.act_window",
+            "name": "Create Visit",
+            "res_model": "hr.hospital.patient.visit",
+            "view_mode": "form",
+            "target": "current",
+            "context": {
+                "default_doctor_id": self.id,
+            },
+        }
     @api.constrains('mentor_id', 'is_intern')
     def _check_mentor_assignment(self):
         for doctor in self:

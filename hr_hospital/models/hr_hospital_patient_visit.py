@@ -4,6 +4,7 @@ from odoo import models, fields, api, exceptions, _
 class HRHPatientVisit(models.Model):
     _name = 'hr.hospital.patient.visit'
     _description = 'Patient visit'
+    _rec_name = 'display_name'
 
     patient_id = fields.Many2one(
         comodel_name='hr.hospital.patient',
@@ -36,6 +37,14 @@ class HRHPatientVisit(models.Model):
         inverse_name='visit_id',
         string="Diagnosis")
 
+    @api.depends("patient_id", "visit_date")
+    def _compute_display_name(self):
+        for rec in self:
+            date_str = rec.visit_date.strftime(
+                "%d-%m-%Y %H:%M") if rec.visit_date else "New visit"
+            patient_name = rec.patient_id.name if rec.patient_id else ""
+            rec.display_name = f"{date_str} - {patient_name}"
+
     @api.constrains('visit_date', 'doctor_id')
     def _check_visit_modification(self):
         if self.status == 'done':
@@ -44,13 +53,6 @@ class HRHPatientVisit(models.Model):
                         visit.scheduled_datetime or visit.doctor_id):
                     raise exceptions.ValidationError(_(
                         "Can't change time or doctor"))
-
-    @api.constrains('diagnosis_ids')
-    def _check_delete_archival(self):
-        for visit in self:
-            if visit.diagnosis_ids:
-                raise exceptions.ValidationError(_(
-                    "Can't delete or archive visits with diagnosis."))
 
     @api.constrains('scheduled_datetime', 'doctor_id', 'patient_id')
     def _check_single_visit_per_day(self):
@@ -73,3 +75,10 @@ class HRHPatientVisit(models.Model):
             if same_day_visits:
                 raise exceptions.ValidationError(_(
                     "A patient cannot make an appointment with the same doctor more than once a day."))
+
+    @api.ondelete(at_uninstall=False)
+    def _check_delete_archival(self):
+        for visit in self:
+            if visit.diagnosis_ids:
+                raise exceptions.ValidationError(_(
+                    "Can't delete or archive visits with diagnosis."))

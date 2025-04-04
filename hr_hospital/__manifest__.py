@@ -23,8 +23,12 @@
         'views/hr_hospital_patient_views.xml',
         'views/hr_hospital_disease_views.xml',
         'views/hr_hospital_patient_visit_views.xml',
+        'views/hr_hospital_diagnosis_views.xml',
+
         'data/hr_hospital_disease_data.xml',
         'data/hr_hospital_specialization_data.xml',
+
+        'report/hr_hospital_reports.xml',
     ],
     'demo': [
         'demo/hr_hospital_demo.xml',
@@ -35,5 +39,11 @@
 
     'images': [
         'static/description/icon.png'
-      ],
+    ],
+
+    # 'assets': {
+    #     'web.assets_backend': [
+    #         'hr_hospital/static/src/js/phone_mask.js',
+    #     ],
+    # },
 }

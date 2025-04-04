@@ -7,9 +7,14 @@ class HRHPatient(models.Model):
     _inherit = 'hr.hospital.person'
     _description = 'Patient'
 
-    name = fields.Char(required=True)
+    name = fields.Char(
+        compute='_compute_name',
+        store=True)
+
     last_name = fields.Char()
+
     first_name = fields.Char()
+
     birth_date = fields.Date()
 
     doctor_id = fields.Many2one(
@@ -17,12 +22,63 @@ class HRHPatient(models.Model):
         string="Doctor")
 
     age = fields.Integer(
-        string="Вік",
         compute="_compute_age",
         store=True)
 
+    diagnosis_history_ids = fields.One2many(
+        comodel_name='hr.hospital.diagnosis',
+        inverse_name='patient_id',
+        string="Diagnosis history"
+    )
+
+    visit_ids = fields.One2many(
+        comodel_name='hr.hospital.patient.visit',
+        inverse_name='patient_id',
+        string="Visit history"
+    )
+
     passport_data = fields.Char()
     contact_person = fields.Char()
+
+    def action_open_patient_visits(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Visit history',
+            'res_model': 'hr.hospital.patient.visit',
+            'view_mode': 'tree,form',
+            'domain': [('patient_id', '=', self.id)],
+            'context': {'default_patient_id': self.id},
+            'target': 'current',
+        }
+
+    def action_create_visit(self):
+        visit_obj = self.env['hr.hospital.patient.visit']
+
+        doctor = self.env['hr.hospital.doctor'].search([], limit=1)
+
+        new_visit = visit_obj.create({
+            'patient_id': self.id,
+            'doctor_id': doctor.id,
+            'visit_date': fields.Datetime.now(),
+            'scheduled_datetime': fields.Datetime.now(),
+            'status': 'planned',
+        })
+
+        action = {
+            'type': 'ir.actions.act_window',
+            #'name': 'New visit',
+            'res_model': 'hr.hospital.patient.visit',
+            'res_id': new_visit.id,
+            'view_mode': 'form',
+            'target': 'current',
+        }
+
+        return action
+
+    @api.depends('first_name', 'last_name')
+    def _compute_name(self):
+        for record in self:
+            record.name = f'{record.first_name} {record.last_name}'
 
     @api.depends('birth_date')
     def _compute_age(self):

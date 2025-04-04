@@ -1,0 +1,55 @@
+<odoo>
+    <record id="hr_hospital_disease_report_wizard" model="ir.actions.report">
+        <field name="name">Diseases report</field>
+        <field name="model">hr.hospital.disease</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">hr_hospital.report_disease_template</field>
+        <field name="report_file">hr_hospital.report_disease_template</field>
+        <field name="print_report_name">(object._get_report_base_filename())
+        </field>
+        <field name="attachment"/>
+        <field name="binding_model_id" ref="model_hr_hospital_disease"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_disease_template">
+        <t t-call="web.html_container">
+    <t t-call="web.external_layout">
+        <div class="page">
+            <h2>Disease Report</h2>
+            <p>
+                <strong>Period:</strong>
+                <span t-esc="data.get('date_from', '')"/> to <span t-esc="data.get('date_to', '')"/>
+            </p>
+            <p>
+                <strong>Doctors:</strong>
+                <span t-esc="data.get('doctor_names', '')"/>
+            </p>
+
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Disease</th>
+                        <th>Patient</th>
+                        <th>Doctor</th>
+                        <th>Visit Date</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr t-foreach="data.get('diagnoses', [])" t-as="diagnosis">
+                        <td t-esc="diagnosis.get('disease_name', '')"/>
+                        <td t-esc="diagnosis.get('patient_name', '')"/>
+                        <td t-esc="diagnosis.get('doctor_name', '')"/>
+                        <td t-esc="diagnosis.get('visit_date', '')"/>
+                        <td t-esc="diagnosis.get('details', '')"/>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </t>
+</t>
+    </template>
+
+
+</odoo>

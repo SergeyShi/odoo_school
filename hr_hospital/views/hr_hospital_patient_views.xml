@@ -17,18 +17,63 @@
         <field name="arch" type="xml">
             <form>
                 <sheet>
+                    <header>
+
+                        <button name="action_create_visit"
+                                string="Quick visit"
+                                type="object"
+                                class="oe_highlight"/>
+
+                        <button name="action_open_patient_visits"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-calendar"
+                                string="Visit history"/>
+
+                    </header>
                     <group>
-                        <field name="name"/>
-                        <field name="last_name"/>
-                        <field name="first_name"/>
-                        <field name="doctor_id"/>
-                        <field name="birth_date"/>
-                        <field name="age"/>
-                        <field name="passport_data"/>
-                        <field name="contact_person"/>
+                        <group>
+                            <field name="name"/>
+                            <field name="last_name"/>
+                            <field name="first_name"/>
+                            <field name="gender"/>
+                            <field name="doctor_id"/>
+                            <field name="birth_date"/>
+                            <field name="age"/>
+                            <field name="passport_data"/>
+                            <field name="contact_person"/>
+                            <field name="phone" widget="phone"/>
+                        </group>
+                        <group>
+                            <field name="photo" widget="image" class="oe_avatar_m0"
+                                   options='{"zoom": true, "preview_image": "avatar_128"}'/>
+                        </group>
+                        <notebook>
+                            <page string="Diagnosis history">
+                                <field name="diagnosis_history_ids">
+                                    <tree editable="bottom">
+                                        <field name="visit_id"/>
+                                        <field name="disease_id"/>
+                                        <field name="approved"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
                     </group>
                 </sheet>
             </form>
+        </field>
+    </record>
+
+    <record id="hr_hospital_patient_search" model="ir.ui.view">
+        <field name="name">hr.hospital.patient.search
+            (hr_hospital_patient)</field>
+        <field name="model">hr.hospital.patient</field>
+        <field name="arch" type="xml">
+            <search string="Filter patients">
+                <field name="name" string="Full name"/>
+                <field name="phone" string="Phone"/>
+            </search>
         </field>
     </record>
 
