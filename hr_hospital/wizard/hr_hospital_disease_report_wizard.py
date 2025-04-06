@@ -40,10 +40,6 @@ class DiseaseReportWizard(models.TransientModel):
             'name': f'Disease Report ({self.date_from} to {self.date_to})',
             'res_model': 'hr.hospital.diagnosis',
             'view_mode': 'tree,form',
-            'views': [
-                (False, 'tree'),
-                (False, 'form')
-            ],
             'domain': domain,
             'target': 'current',
             'context': {
