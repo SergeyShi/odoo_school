@@ -11,6 +11,8 @@
                             <field name="name"/>
                             <field name="last_name"/>
                             <field name="first_name"/>
+                            <field name="gender" widget="radio"/>
+                            <field name="phone" widget="phone"/>
                             <field name="specialization_id"/>
                         </group>
 
@@ -71,31 +73,87 @@
         <field name="model">hr.hospital.doctor</field>
         <field name="priority">100</field>
         <field name="arch" type="xml">
-            <kanban class="o_kanban_mobile" default_group_by="specialization_id"
-            quick_create_view="hr_hospital.hr_hospital_visit_form">
+            <kanban class="o_kanban_mobile"
+                    default_group_by="specialization_id"
+                    quick_create_view="hr_hospital.hr_hospital_visit_form">
 
                 <field name="name"/>
+                <field name="specialization_id"/>
+                <field name="photo"/>
+                <field name="is_intern"/>
                 <templates>
-                <t t-name="kanban-box">
-                    <div class="oe_kanban_card">
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card"
+                             t-attf-class="oe_kanban_card #{kanban_color()} #{record.is_intern.raw_value ? 'oe_kanban_card_intern' : ''}">
 
-                        <div t-attf-class="oe_kanban_content oe_kanban_global_click">
-                            <div class="o_kanban_image">
-                                <field name="photo"/>
+                            <div class="oe_kanban_content oe_kanban_global_click">
+
+                                <div class="o_kanban_image float-left mr-3">
+                                    <field name="photo" widget="image"
+                                           class="oe_avatar"/>
+                                </div>
+
+                                <!-- Main content -->
+                                <div class="o_kanban_details">
+                                    <!-- name -->
+                                    <strong class="o_kanban_record_title">
+                                        <field name="name"/>
+                                    </strong>
+
+                                    <!-- specialization_id -->
+                                    <div class="text-muted mb-2">
+                                        <i class="fa fa-stethoscope mr-1" title="Specialization"/>
+                                        <field name="specialization_id"
+                                               widget="many2one_avatar"/>
+                                    </div>
+
+                                    <!-- Intern status -->
+                                    <div t-if="record.is_intern.raw_value"
+                                         class="mb-2">
+                                        <span class="badge badge-warning">
+                                            <i class="fa fa-graduation-cap mr-1" title="Intern"/>
+                                            Intern
+                                        </span>
+                                    </div>
+
+                                </div>
                             </div>
-                            <div>
-                                <strong class="o_kanban_record_title">
-                                    <field name="name"/>
-                                </strong>
+
+                            <div class="oe_kanban_footer d-flex justify-content-between align-items-center">
+
+                                <button name="action_create_visit"
+                                        string="Create visit"
+                                        type="object"
+                                        class="btn btn-primary btn-sm">
+                                    <i class="fa fa-calendar-plus-o mr-1"/>
+                                    Visit
+                                </button>
                             </div>
-                            <div>
-                                <field name="is_intern"/> Intern
-                            </div>
-                            <button name="action_create_visit" string="Create visit" type="object" class="oe_highlight"/>
                         </div>
-                    </div>
-                </t>
-            </templates>
+                    </t>
+
+                    <!-- Styles -->
+                    <t t-name="kanban-box-styles">
+                        <style>
+                            .oe_kanban_card_intern {
+                            border-left: 4px solid #FFC107;
+                            }
+                            .oe_kanban_card .oe_avatar {
+                            width: 64px;
+                            height: 64px;
+                            object-fit: cover;
+                            }
+                            .oe_kanban_card .o_kanban_details {
+                            margin-left: 74px;
+                            }
+                            .oe_kanban_card .oe_kanban_footer {
+                            margin-top: 10px;
+                            padding-top: 10px;
+                            border-top: 1px solid #eee;
+                            }
+                        </style>
+                    </t>
+                </templates>
             </kanban>
         </field>
     </record>
@@ -111,5 +169,6 @@
     <menuitem id="hr_hospital_menu"
               action="action_hr_hospital_action_window"
               parent="hr_hospital_menu_list"
-              name="Doctors" sequence="30"/>
+              name="Doctors"
+              sequence="30"/>
 </odoo>

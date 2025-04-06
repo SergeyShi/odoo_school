@@ -36,7 +36,7 @@
                             <field name="name"/>
                             <field name="last_name"/>
                             <field name="first_name"/>
-                            <field name="gender"/>
+                            <field name="gender" widget="selection_badge"/>
                             <field name="doctor_id"/>
                             <field name="birth_date"/>
                             <field name="age"/>
@@ -45,7 +45,8 @@
                             <field name="phone" widget="phone"/>
                         </group>
                         <group>
-                            <field name="photo" widget="image" class="oe_avatar_m0"
+                            <field name="photo" widget="image"
+                                   class="oe_avatar_m0"
                                    options='{"zoom": true, "preview_image": "avatar_128"}'/>
                         </group>
                         <notebook>
@@ -67,7 +68,8 @@
 
     <record id="hr_hospital_patient_search" model="ir.ui.view">
         <field name="name">hr.hospital.patient.search
-            (hr_hospital_patient)</field>
+            (hr_hospital_patient)
+        </field>
         <field name="model">hr.hospital.patient</field>
         <field name="arch" type="xml">
             <search string="Filter patients">

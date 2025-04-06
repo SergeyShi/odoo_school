@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <record id="disease_infectious" model="hr.hospital.disease">
-        <field name="name">Інфекційні хвороби</field>
+        <field name="name">Infectious diseases</field>
     </record>
     <record id="disease_chronic" model="hr.hospital.disease">
-        <field name="name">Хронічні хвороби</field>
+        <field name="name">Chronic diseases</field>
     </record>
 
     <record id="disease_flu" model="hr.hospital.disease">
-        <field name="name">Грип</field>
+        <field name="name">Flu</field>
         <field name="parent_id" ref="disease_infectious"/>
     </record>
     <record id="disease_tuberculosis" model="hr.hospital.disease">
-        <field name="name">Туберкульоз</field>
+        <field name="name">Tuberculosis</field>
         <field name="parent_id" ref="disease_infectious"/>
     </record>
     <record id="disease_diabetes" model="hr.hospital.disease">
-        <field name="name">Діабет</field>
+        <field name="name">Diabetes</field>
         <field name="parent_id" ref="disease_chronic"/>
     </record>
     <record id="disease_hypertension" model="hr.hospital.disease">
-        <field name="name">Гіпертонія</field>
+        <field name="name">Hypertension</field>
         <field name="parent_id" ref="disease_chronic"/>
     </record>
 </odoo>

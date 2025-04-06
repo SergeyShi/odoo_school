@@ -1,10 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <!-- Main menue -->
     <menuitem id="hr_hospital_main_menu"
-            web_icon="hr_hospital,static/description/icon.png"
-            name="Hospital" sequence="10"/>
+              name="Hospital"
+              sequence="100"
+              web_icon="hr_hospital,static/description/icon.png"/>
 
+    <!-- Submenue -->
     <menuitem id="hr_hospital_menu_list"
-            parent="hr_hospital_main_menu"
-            name="Menu" sequence="20"/>
-
+              parent="hr_hospital_main_menu"
+              name="Menu"
+              sequence="20"/>
 </odoo>

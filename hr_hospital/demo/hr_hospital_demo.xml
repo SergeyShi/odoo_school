@@ -4,6 +4,8 @@
         <field name="name">Ivan Ivanenko</field>
         <field name="first_name">Ivan</field>
         <field name="last_name">Ivanenko</field>
+        <field name="gender">male</field>
+        <field name="phone">1234567</field>
         <field name="specialization_id" ref="specialization_neurologist"/>
     </record>
 
@@ -11,14 +13,36 @@
         <field name="name">Petro Petrenko</field>
         <field name="first_name">Petro</field>
         <field name="last_name">Petrenko</field>
+        <field name="gender">male</field>
+        <field name="phone">12312345</field>
         <field name="specialization_id" ref="specialization_pediatrician"/>
     </record>
-
     <record id="doctor_anna" model="hr.hospital.doctor">
         <field name="name">Anna Neurolog</field>
         <field name="first_name">Anna</field>
         <field name="last_name">Neurolog</field>
+        <field name="gender">female</field>
         <field name="specialization_id" ref="specialization_imunologist"/>
+    </record>
+
+    <record id="doctor_intern_1" model="hr.hospital.doctor">
+        <field name="name">Panas Panasenko</field>
+        <field name="first_name">Panas</field>
+        <field name="last_name">Panasenko</field>
+        <field name="gender">male</field>
+        <field name="is_intern">True</field>
+        <field name="mentor_id" ref="doctor_petr"/>
+        <field name="specialization_id" ref="specialization_pediatrician"/>
+    </record>
+
+    <record id="doctor_intern_2" model="hr.hospital.doctor">
+        <field name="name">Mariya Aleksandrenko</field>
+        <field name="first_name">Mariya</field>
+        <field name="last_name">Aleksandrenko</field>
+        <field name="gender">female</field>
+        <field name="is_intern">True</field>
+        <field name="mentor_id" ref="doctor_anna"/>
+        <field name="specialization_id" ref="specialization_surgeon"/>
     </record>
 
     <!-- Patients -->
@@ -26,6 +50,7 @@
         <field name="name">Oleksandr Oleksandrenko</field>
         <field name="first_name">Oleksandr</field>
         <field name="last_name">Oleksandrenko</field>
+        <field name="gender">male</field>
         <field name="birth_date">1990-06-15</field>
         <field name="doctor_id" ref="doctor_ivan"/>
     </record>
@@ -34,15 +59,116 @@
         <field name="name">Sophia Kyivska</field>
         <field name="first_name">Sophia</field>
         <field name="last_name">Kyivska</field>
+        <field name="gender">female</field>
         <field name="birth_date">1985-02-23</field>
         <field name="doctor_id" ref="doctor_anna"/>
+        <field name="phone">87654321</field>
     </record>
 
     <record id="patient_maksim" model="hr.hospital.patient">
         <field name="name">Maksim Maksimenko</field>
         <field name="first_name">Maksim</field>
         <field name="last_name">Maksimenko</field>
+        <field name="gender">male</field>
         <field name="birth_date">2000-11-08</field>
         <field name="doctor_id" ref="doctor_petr"/>
+        <field name="phone">14785236</field>
+    </record>
+
+    <record id="patient_1" model="hr.hospital.patient">
+        <field name="name">Serhii Jameson</field>
+        <field name="first_name">Serhii</field>
+        <field name="last_name">Jameson</field>
+        <field name="gender">male</field>
+        <field name="birth_date">1998-11-08</field>
+        <field name="doctor_id" ref="doctor_petr"/>
+    </record>
+
+    <!--  Visits  -->
+    <record id="patient_visit_1" model="hr.hospital.patient.visit">
+        <field name="patient_id" ref="patient_1"/>
+        <field name="doctor_id" ref="doctor_intern_1"/>
+        <field name="visit_date">2025-04-01</field>
+        <field name="scheduled_datetime">2025-04-01 10:00:00</field>
+        <field name="status">planned</field>
+    </record>
+
+    <record id="patient_visit_2" model="hr.hospital.patient.visit">
+        <field name="patient_id" ref="patient_maksim"/>
+        <field name="doctor_id" ref="doctor_intern_2"/>
+        <field name="visit_date">2025-04-05</field>
+        <field name="scheduled_datetime">2025-04-05 10:00:00</field>
+        <field name="status">cancelled</field>
+    </record>
+
+    <record id="patient_visit_3" model="hr.hospital.patient.visit">
+        <field name="patient_id" ref="patient_sophia"/>
+        <field name="doctor_id" ref="doctor_anna"/>
+        <field name="visit_date">2025-04-10</field>
+        <field name="scheduled_datetime">2025-04-10 10:00:00</field>
+        <field name="status">planned</field>
+    </record>
+
+    <record id="patient_visit_4" model="hr.hospital.patient.visit">
+        <field name="patient_id" ref="patient_alex"/>
+        <field name="doctor_id" ref="doctor_ivan"/>
+        <field name="visit_date">2025-04-15</field>
+        <field name="scheduled_datetime">2025-04-15 10:00:00</field>
+        <field name="status">planned</field>
+    </record>
+
+    <!--  Diagnosis  -->
+    <record id="diagnosis_1" model="hr.hospital.diagnosis">
+        <field name="visit_id" ref="patient_visit_1"/>
+        <field name="disease_id" ref="hr_hospital.disease_tuberculosis"/>
+        <field name="patient_id" ref="patient_1"/>
+        <field name="description">Mild cough</field>
+        <field name="name">Mild cough</field>
+        <field name="diagnosis_date">2025-04-01</field>
+    </record>
+
+    <record id="diagnosis_2" model="hr.hospital.diagnosis">
+        <field name="visit_id" ref="patient_visit_2"/>
+        <field name="disease_id" ref="hr_hospital.disease_flu"/>
+        <field name="patient_id" ref="patient_maksim"/>
+        <field name="description">Headache</field>
+        <field name="name">Headache</field>
+        <field name="diagnosis_date">2025-04-02</field>
+    </record>
+
+    <record id="diagnosis_3" model="hr.hospital.diagnosis">
+        <field name="visit_id" ref="patient_visit_3"/>
+        <field name="disease_id" ref="hr_hospital.disease_tuberculosis"/>
+        <field name="patient_id" ref="patient_sophia"/>
+        <field name="description">High temperature</field>
+        <field name="name">High temperature</field>
+        <field name="diagnosis_date">2025-04-03</field>
+    </record>
+
+    <record id="diagnosis_4" model="hr.hospital.diagnosis">
+        <field name="visit_id" ref="patient_visit_4"/>
+        <field name="disease_id" ref="hr_hospital.disease_diabetes"/>
+        <field name="patient_id" ref="patient_alex"/>
+        <field name="description">Sore throat</field>
+        <field name="name">Sore throat</field>
+        <field name="diagnosis_date">2025-04-04</field>
+    </record>
+
+    <record id="diagnosis_5" model="hr.hospital.diagnosis">
+        <field name="visit_id" ref="patient_visit_1"/>
+        <field name="disease_id" ref="hr_hospital.disease_flu"/>
+        <field name="patient_id" ref="patient_1"/>
+        <field name="description">Runny nose</field>
+        <field name="name">Runny nose</field>
+        <field name="diagnosis_date">2025-04-05</field>
+    </record>
+
+    <record id="diagnosis_6" model="hr.hospital.diagnosis">
+        <field name="visit_id" ref="patient_visit_3"/>
+        <field name="disease_id" ref="hr_hospital.disease_hypertension"/>
+        <field name="patient_id" ref="patient_sophia"/>
+        <field name="description">Weakness</field>
+        <field name="name">Weakness</field>
+        <field name="diagnosis_date">2025-04-06</field>
     </record>
 </odoo>

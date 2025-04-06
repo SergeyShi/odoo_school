@@ -45,7 +45,7 @@ class Diagnosis(models.Model):
                 record.doctor_id = record.visit_id.doctor_id.id
                 record.diagnosis_date = record.visit_id.scheduled_datetime
 
-    @api.constrains('is_approved')
+    @api.constrains('approved')
     def _check_mentor_approval(self):
         for record in self:
             doctor = record.visit_id.doctor_id

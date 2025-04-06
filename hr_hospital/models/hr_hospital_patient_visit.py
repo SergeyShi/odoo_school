@@ -74,7 +74,7 @@ class HRHPatientVisit(models.Model):
             ])
             if same_day_visits:
                 raise exceptions.ValidationError(_(
-                    "A patient cannot make an appointment with the same doctor more than once a day."))
+                    "A patient cannot make a visit with the same doctor more than once a day."))
 
     @api.ondelete(at_uninstall=False)
     def _check_delete_archival(self):

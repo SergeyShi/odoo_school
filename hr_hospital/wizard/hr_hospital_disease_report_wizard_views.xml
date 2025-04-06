@@ -1,5 +1,4 @@
 <odoo>
-
     <record id="hr_hospital_disease_report_wizard_form" model="ir.ui.view">
         <field name="name">hr.hospital.disease.report.wizard.form</field>
         <field name="model">hr.hospital.disease.report.wizard</field>
@@ -8,10 +7,12 @@
                 <sheet>
                     <group>
                         <group>
-                            <field name="doctor_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                            <field name="doctor_ids" widget="many2many_tags"
+                                   options="{'no_create': True}"/>
                         </group>
                         <group>
-                            <field name="disease_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                            <field name="disease_ids" widget="many2many_tags"
+                                   options="{'no_create': True}"/>
                         </group>
                         <group>
                             <field name="date_from"/>
@@ -20,8 +21,11 @@
                     </group>
                 </sheet>
                 <footer>
-                    <button name="action_generate_report" string="Generate Report" type="object" class="btn-primary"/>
-                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    <button name="action_generate_report"
+                            string="Generate Report" type="object"
+                            class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary"
+                            special="cancel"/>
                 </footer>
             </form>
         </field>
@@ -29,25 +33,15 @@
 
     <record id="hr_hospital_disease_report_wizard_act_window"
             model="ir.actions.act_window">
-        <field name="name">Generate report</field>
+        <field name="name">Diseases Report</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">hr.hospital.disease.report.wizard</field>
         <field name="view_mode">form</field>
-        <field name="view_id"
-               ref="hr_hospital_disease_report_wizard_form"/>
+        <field name="view_id" ref="hr_hospital_disease_report_wizard_form"/>
         <field name="target">new</field>
-        <field name="binding_model_id"
-               ref="hr_hospital.model_hr_hospital_disease"/>
-        <field name="binding_view_types">list,form</field>
-    </record>
-
-    <record id="action_disease_report_wizard" model="ir.actions.act_window">
-        <field name="name">Disease Report</field>
-        <field name="res_model">hr.hospital.disease.report.wizard</field>
-        <field name="view_mode">form,tree</field>
         <field name="binding_model_id" ref="model_hr_hospital_doctor"/>
         <field name="binding_type">report</field>
-        <field name="target">new</field>
-        <field name="context">{'default_date_from': False, 'default_date_to': False}</field>
+        <field name="context">{'default_doctor_ids': active_ids}
+        </field>
     </record>
 </odoo>

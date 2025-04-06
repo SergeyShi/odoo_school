@@ -4,11 +4,6 @@
         <field name="model">hr.hospital.disease</field>
         <field name="arch" type="xml">
             <tree>
-                <header>
-                    <button name="%(hr_hospital_disease_report_wizard_act_window)d"
-                            string="Generate report"
-                            type="action" class="btn-primary"/>
-                </header>
                 <field name="complete_name"/>
                 <field name="description"/>
             </tree>
@@ -69,4 +64,3 @@
               name="Diseases" sequence="40"/>
 
 </odoo>
-
