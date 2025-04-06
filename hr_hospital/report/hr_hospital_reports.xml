@@ -1,7 +1,7 @@
 <odoo>
     <record id="hr_hospital_disease_report_wizard" model="ir.actions.report">
         <field name="name">Diseases report</field>
-        <field name="model">hr.hospital.disease</field>
+        <field name="model">hr.hospital.disease.report.wizard</field>
         <field name="report_type">qweb-html</field>
         <field name="report_name">hr_hospital.report_disease_template</field>
         <field name="report_file">hr_hospital.report_disease_template</field>
@@ -17,12 +17,14 @@
                 <div class="page">
                     <h2>Disease Report</h2>
 
+                    <p><t t-out="docs"/></p>
+
                     <!-- Safe display of filter information -->
                     <div class="filter-info mb-4"
                          t-if="data and data.get('form_data')">
                         <p>
                             <strong>Period:</strong>
-                            <span t-esc="data['form_data'].get('date_from', 'N/A')"/>
+                            <span t-esc="docs['form_data'].get('date_from', 'N/A')"/>
                             to
                             <span t-esc="data['form_data'].get('date_to', 'N/A')"/>
                         </p>
@@ -72,7 +74,7 @@
                     <!-- Show message if no data -->
                     <div t-if="not data or not data.get('diagnoses')"
                          class="alert alert-info">
-                        No diagnosis records found for the selected criteria.
+                        No diagnosis records found for the selected criteria!
                     </div>
                 </div>
             </t>

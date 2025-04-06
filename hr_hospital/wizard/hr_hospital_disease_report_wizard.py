@@ -23,49 +23,31 @@ class DiseaseReportWizard(models.TransientModel):
                     _("'From Date' cannot be after 'To Date'"))
 
     def action_generate_report(self):
-        self.ensure_one()
-        if not self.date_from or not self.date_to:
-            raise ValidationError(
-                _("Please specify both 'From' and 'To' dates"))
-
-        report_data = {
-            'form_data': {
-                'date_from': self.date_from.strftime('%Y-%m-%d'),
-                'date_to': self.date_to.strftime('%Y-%m-%d'),
-                'doctor_names': ', '.join(self.doctor_ids.mapped(
-                    'name')) if self.doctor_ids else 'All doctors',
-                'disease_names': ', '.join(self.disease_ids.mapped(
-                    'complete_name')) if self.disease_ids else 'All diseases',
-            },
-            'diagnoses': []  # Ensure the key is 'diagnoses'
-        }
-
-        domain = [
-            ('visit_id.visit_date', '>=', self.date_from),
-            ('visit_id.visit_date', '<=', self.date_to)
-        ]
+        domain = []
 
         if self.doctor_ids:
-            domain.append(('visit_id.doctor_id', 'in', self.doctor_ids.ids))
+            domain.append(('doctor_id', 'in', self.doctor_ids.ids))
+
         if self.disease_ids:
             domain.append(('disease_id', 'in', self.disease_ids.ids))
 
-        for diagnosis in self.env['hr.hospital.diagnosis'].search(domain):
-            report_data['diagnoses'].append(
-                {
-                    'disease_name': diagnosis.disease_id.complete_name,
-                    'patient_name': diagnosis.patient_id.name,
-                    'doctor_name': diagnosis.visit_id.doctor_id.name,
-                    'visit_date': diagnosis.visit_id.visit_date.strftime(
-                        '%Y-%m-%d'),
-                    'description': diagnosis.description or '-'
-                })
+        domain.append(('diagnosis_date', '>=', self.date_from))
 
-        if not report_data['diagnoses']:
-            raise ValidationError(
-                _("No diagnoses found for the given criteria"))
+        domain.append(('diagnosis_date', '<=', self.date_to))
 
-        return self.env.ref(
-            'hr_hospital.hr_hospital_disease_report_wizard').report_action(
-            self,
-            data=report_data)
+        return {
+            'type': 'ir.actions.act_window',
+            'name': f'Disease Report ({self.date_from} to {self.date_to})',
+            'res_model': 'hr.hospital.diagnosis',
+            'view_mode': 'tree,form',
+            'views': [
+                (False, 'tree'),
+                (False, 'form')
+            ],
+            'domain': domain,
+            'target': 'current',
+            'context': {
+                'group_by': 'disease_id',
+                'search_default_group_by_disease': True
+            }
+        }
