@@ -37,6 +37,10 @@ class HRHDoctor(models.Model):
                 "default_doctor_id": self.id,
             },
         }
+
+    def _get_report_base_filename(self):
+        return f'Doctor_{self.first_name}_{self.last_name}'
+
     @api.constrains('mentor_id', 'is_intern')
     def _check_mentor_assignment(self):
         for doctor in self:

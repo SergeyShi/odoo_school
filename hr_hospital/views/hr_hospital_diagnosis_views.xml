@@ -20,6 +20,8 @@
         <field name="arch" type="xml">
             <form>
                 <sheet>
+                    <field name="active" invisible="1"/>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
                     <group>
                         <field name="name"/>
                         <field name="visit_id"/>
@@ -29,6 +31,7 @@
                         <field name="diagnosis_date"/>
                         <field name="approved"/>
                     </group>
+
                 </sheet>
             </form>
         </field>

@@ -81,7 +81,21 @@
                 <field name="specialization_id"/>
                 <field name="photo"/>
                 <field name="is_intern"/>
+                <field name="intern_ids"/>
                 <templates>
+                    <t t-name="kanban-menu">
+                        <t t-if="widget.editable">
+                            <a role="menuitem" type="edit"
+                               class="dropdown-item">Edit
+                            </a>
+                        </t>
+                        <t t-if="widget.deletable">
+                            <a role="menuitem" type="delete"
+                               class="dropdown-item">Delete
+                            </a>
+                        </t>
+                        <ul class="oe_kanban_colorpicker" data-field="color"/>
+                    </t>
                     <t t-name="kanban-box">
                         <div class="oe_kanban_card"
                              t-attf-class="oe_kanban_card #{kanban_color()} #{record.is_intern.raw_value ? 'oe_kanban_card_intern' : ''}">
@@ -102,16 +116,24 @@
 
                                     <!-- specialization_id -->
                                     <div class="text-muted mb-2">
-                                        <i class="fa fa-stethoscope mr-1" title="Specialization"/>
-                                        <field name="specialization_id"
-                                               widget="many2one_avatar"/>
+                                        <i class="fa fa-stethoscope mr-1"
+                                           title="Specialization"/>
+                                        <field name="specialization_id"/>
                                     </div>
 
+                                    <t t-if="record.intern_ids.raw_value > 0">
+                                        <div class="mb-2">
+                                            Interns:
+                                            <field name="intern_ids"
+                                                   widget="many2many_tags"/>
+                                        </div>
+                                    </t>
                                     <!-- Intern status -->
                                     <div t-if="record.is_intern.raw_value"
                                          class="mb-2">
                                         <span class="badge badge-warning">
-                                            <i class="fa fa-graduation-cap mr-1" title="Intern"/>
+                                            <i class="fa fa-graduation-cap mr-1"
+                                               title="Intern"/>
                                             Intern
                                         </span>
                                     </div>

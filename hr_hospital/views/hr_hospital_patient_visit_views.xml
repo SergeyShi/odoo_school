@@ -27,14 +27,21 @@
                                options="{'clickable':'1'}"/>
                     </header>
                     <group>
-                        <field name="scheduled_datetime"/>
-                        <field name="visit_date"/>
-                        <field name="doctor_id"/>
-                        <field name="patient_id"/>
-                        <separator/>
-                        <field name="diagnosis_ids"/>
+                        <group>
+                            <field name="scheduled_datetime"/>
+                            <field name="visit_date"/>
+                            <field name="doctor_id"/>
+                            <field name="patient_id"/>
+                            <separator/>
+                        </group>
+                        <sheet>
+                            <group string="Diagnosis">
+                                <field name="diagnosis_ids" string=""/>
+                            </group>
+                        </sheet>
                     </group>
                 </sheet>
+
             </form>
         </field>
     </record>

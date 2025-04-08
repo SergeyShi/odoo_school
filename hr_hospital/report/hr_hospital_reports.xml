@@ -1,15 +1,128 @@
 <odoo>
-    <record id="hr_hospital_disease_report_wizard" model="ir.actions.report">
-        <field name="name">Diseases report</field>
-        <field name="model">hr.hospital.disease.report.wizard</field>
+    <record id="hr_hospital_doctor_report_paperformat" model="report.paperformat">
+        <field name="name">A4 Doctor report</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">80</field>
+        <field name="margin_bottom">15</field>
+        <field name="margin_left">15</field>
+        <field name="margin_right">15</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">15</field>
+        <field name="dpi">180</field>
+    </record>
+
+    <record id="hr_hospital_doctor_report" model="ir.actions.report">
+        <field name="name">Doctor report</field>
+        <field name="model">hr.hospital.doctor</field>
         <field name="report_type">qweb-html</field>
-        <field name="report_name">hr_hospital.report_disease_template</field>
-        <field name="report_file">hr_hospital.report_disease_template</field>
+        <field name="report_name">hr_hospital.report_doctor_template</field>
+        <field name="report_file">hr_hospital.report_doctor_template</field>
         <field name="print_report_name">(object._get_report_base_filename())
         </field>
-        <!--        <field name="binding_model_id" ref="model_hr_hospital_disease"/>-->
-        <!--        <field name="binding_type">report</field>-->
+        <field name="attachment"/>
+        <field name="binding_model_id" ref="model_hr_hospital_doctor"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="hr_hospital.hr_hospital_doctor_report_paperformat"/>
     </record>
+
+    <template id="report_doctor_template">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <t t-foreach="docs" t-as="o">
+<!--                        <t t-set="lang" t-value="o.lang"/>-->
+<!--                        <t t-set="o" t-value="o.with_context(lang=lang)"/>-->
+                        <h1>
+                            <t t-out="o.name"/>
+                        </h1>
+                        <h3>
+                            <t t-out="o.specialization_id.name"/>
+                        </h3>
+                        <h4>Visit History:</h4>
+                        <t t-set="visits"
+                           t-value="o.env['hr.hospital.patient.visit'].sudo().search([('doctor_id', '=', o.id)], order='visit_date desc')"/>
+                        <t t-if="visits">
+                            <ul>
+                                <t t-foreach="visits" t-as="visit">
+                                    <li>
+                                        <strong>
+                                            <t t-esc="visit.visit_date"/>
+                                        </strong>
+                                        —
+                                        <t t-esc="visit.patient_id.display_name"/>
+                                        —
+                                        Status:
+                                        <t t-esc="visit.status"/>
+                                    </li>
+                                </t>
+                            </ul>
+                        </t>
+                        <t t-else="">
+                            <p>No visits found.</p>
+                        </t>
+                        <h4>Patients:</h4>
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Gender</th>
+                                    <th>Birthday</th>
+                                    <th>Phone</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="visits.mapped('patient_id')"
+                                   t-as="patient">
+                                    <tr>
+                                        <td>
+                                            <t t-esc="patient.name"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="patient.gender"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="patient.birth_date"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="patient.phone"/>
+                                        </td>
+                                        <td>
+                                            <t t-set="last_visit"
+                                               t-value="o.env['hr.hospital.patient.visit'].sudo().search([('doctor_id', '=', o.id), ('patient_id', '=', patient.id)], limit=1, order='visit_date desc')"/>
+                                            <span t-attf-style="background-color:#{ 'yellow' if last_visit.status == 'planned' else ('green' if last_visit.status == 'done' else 'red') };padding:2px 5px;color:white;">
+                                                <t t-esc="last_visit.status"/>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+
+                        <div class="text-right">
+                            <small>
+                                <t t-set="current_time"
+                                   t-value="datetime.datetime.now().time()"/>
+                                Printed:
+                                <t t-out="current_time"/>
+                                |
+                                City:
+                                <t t-esc="res_company.city or ''"/>
+                            </small>
+                        </div>
+
+                    </t>
+
+                </div>
+
+            </t>
+
+        </t>
+    </template>
 
     <template id="report_disease_template">
         <t t-call="web.html_container">
@@ -17,7 +130,9 @@
                 <div class="page">
                     <h2>Disease Report</h2>
 
-                    <p><t t-out="docs"/></p>
+                    <p>
+                        <t t-out="docs"/>
+                    </p>
 
                     <!-- Safe display of filter information -->
                     <div class="filter-info mb-4"

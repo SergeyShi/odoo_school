@@ -47,7 +47,8 @@
                         <group>
                             <field name="photo" widget="image"
                                    class="oe_avatar_m0"
-                                   options='{"zoom": true, "preview_image": "avatar_128"}'/>
+                                   options='{"zoom": true, "preview_image": "avatar_128"}'
+                                   nolabel="1"/>
                         </group>
                         <notebook>
                             <page string="Diagnosis history">

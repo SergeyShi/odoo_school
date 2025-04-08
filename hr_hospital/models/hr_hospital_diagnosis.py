@@ -1,3 +1,5 @@
+from pygments.lexer import default
+
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
 
@@ -7,6 +9,10 @@ class Diagnosis(models.Model):
     _description = 'Diagnosis'
 
     name = fields.Char()
+
+    active = fields.Boolean(
+        default=True,
+    )
 
     visit_id = fields.Many2one(
         comodel_name='hr.hospital.patient.visit',

@@ -7,6 +7,7 @@
         <field name="gender">male</field>
         <field name="phone">1234567</field>
         <field name="specialization_id" ref="specialization_neurologist"/>
+        <field name="photo" type="base64" file="hr_hospital/static/photo/1.jpeg"/>
     </record>
 
     <record id="doctor_petr" model="hr.hospital.doctor">
@@ -16,6 +17,7 @@
         <field name="gender">male</field>
         <field name="phone">12312345</field>
         <field name="specialization_id" ref="specialization_pediatrician"/>
+        <field name="photo" type="base64" file="hr_hospital/static/photo/2.jpeg"/>
     </record>
     <record id="doctor_anna" model="hr.hospital.doctor">
         <field name="name">Anna Neurolog</field>
@@ -23,6 +25,7 @@
         <field name="last_name">Neurolog</field>
         <field name="gender">female</field>
         <field name="specialization_id" ref="specialization_imunologist"/>
+        <field name="photo" type="base64" file="hr_hospital/static/photo/4.jpeg"/>
     </record>
 
     <record id="doctor_intern_1" model="hr.hospital.doctor">
@@ -33,6 +36,7 @@
         <field name="is_intern">True</field>
         <field name="mentor_id" ref="doctor_petr"/>
         <field name="specialization_id" ref="specialization_pediatrician"/>
+        <field name="photo" type="base64" file="hr_hospital/static/photo/3.jpeg"/>
     </record>
 
     <record id="doctor_intern_2" model="hr.hospital.doctor">
@@ -43,6 +47,7 @@
         <field name="is_intern">True</field>
         <field name="mentor_id" ref="doctor_anna"/>
         <field name="specialization_id" ref="specialization_surgeon"/>
+        <field name="photo" type="base64" file="hr_hospital/static/photo/5.jpeg"/>
     </record>
 
     <!-- Patients -->
@@ -88,32 +93,32 @@
     <record id="patient_visit_1" model="hr.hospital.patient.visit">
         <field name="patient_id" ref="patient_1"/>
         <field name="doctor_id" ref="doctor_intern_1"/>
-        <field name="visit_date">2025-04-01</field>
-        <field name="scheduled_datetime">2025-04-01 10:00:00</field>
+        <field name="visit_date" eval="(DateTime.today() + relativedelta(days=2)).strftime('%Y-%m-%d %H:%M')"/>
+        <field name="scheduled_datetime" eval="(DateTime.today() + relativedelta(days=2)).strftime('%Y-%m-%d %H:%M')"/>
         <field name="status">planned</field>
     </record>
 
     <record id="patient_visit_2" model="hr.hospital.patient.visit">
         <field name="patient_id" ref="patient_maksim"/>
         <field name="doctor_id" ref="doctor_intern_2"/>
-        <field name="visit_date">2025-04-05</field>
-        <field name="scheduled_datetime">2025-04-05 10:00:00</field>
+        <field name="visit_date" eval="(DateTime.today() + relativedelta(days=2)).strftime('%Y-%m-%d %H:%M')"/>
+        <field name="scheduled_datetime" eval="(DateTime.today() + relativedelta(days=3)).strftime('%Y-%m-%d %H:%M')"/>
         <field name="status">cancelled</field>
     </record>
 
     <record id="patient_visit_3" model="hr.hospital.patient.visit">
         <field name="patient_id" ref="patient_sophia"/>
         <field name="doctor_id" ref="doctor_anna"/>
-        <field name="visit_date">2025-04-10</field>
-        <field name="scheduled_datetime">2025-04-10 10:00:00</field>
+        <field name="visit_date" eval="(DateTime.today() + relativedelta(days=2)).strftime('%Y-%m-%d %H:%M')"/>
+        <field name="scheduled_datetime" eval="(DateTime.today() + relativedelta(days=5)).strftime('%Y-%m-%d %H:%M')"/>
         <field name="status">planned</field>
     </record>
 
     <record id="patient_visit_4" model="hr.hospital.patient.visit">
         <field name="patient_id" ref="patient_alex"/>
         <field name="doctor_id" ref="doctor_ivan"/>
-        <field name="visit_date">2025-04-15</field>
-        <field name="scheduled_datetime">2025-04-15 10:00:00</field>
+        <field name="visit_date" eval="(DateTime.today() + relativedelta(days=2)).strftime('%Y-%m-%d %H:%M')"/>
+        <field name="scheduled_datetime" eval="(DateTime.today() + relativedelta(days=0)).strftime('%Y-%m-%d %H:%M')"/>
         <field name="status">planned</field>
     </record>
 
