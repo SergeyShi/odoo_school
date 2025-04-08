@@ -3,7 +3,7 @@ from odoo import models, fields, api, exceptions, _
 
 class HRHDoctor(models.Model):
     _name = 'hr.hospital.doctor'
-    _inherit = 'hr.hospital.person'
+    _inherit = ['hr.hospital.person', 'avatar.mixin']
     _description = 'Doctor'
 
     last_name = fields.Char()

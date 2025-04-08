@@ -7,7 +7,7 @@
         <field name="gender">male</field>
         <field name="phone">1234567</field>
         <field name="specialization_id" ref="specialization_neurologist"/>
-        <field name="photo" type="base64" file="hr_hospital/static/photo/1.jpeg"/>
+        <field name="image_1920" type="base64" file="hr_hospital/static/photo/1.jpeg"/>
     </record>
 
     <record id="doctor_petr" model="hr.hospital.doctor">
@@ -17,7 +17,7 @@
         <field name="gender">male</field>
         <field name="phone">12312345</field>
         <field name="specialization_id" ref="specialization_pediatrician"/>
-        <field name="photo" type="base64" file="hr_hospital/static/photo/2.jpeg"/>
+        <field name="image_1920" type="base64" file="hr_hospital/static/photo/2.jpeg"/>
     </record>
     <record id="doctor_anna" model="hr.hospital.doctor">
         <field name="name">Anna Neurolog</field>
@@ -25,7 +25,7 @@
         <field name="last_name">Neurolog</field>
         <field name="gender">female</field>
         <field name="specialization_id" ref="specialization_imunologist"/>
-        <field name="photo" type="base64" file="hr_hospital/static/photo/4.jpeg"/>
+        <field name="image_1920" type="base64" file="hr_hospital/static/photo/4.jpeg"/>
     </record>
 
     <record id="doctor_intern_1" model="hr.hospital.doctor">
@@ -36,7 +36,7 @@
         <field name="is_intern">True</field>
         <field name="mentor_id" ref="doctor_petr"/>
         <field name="specialization_id" ref="specialization_pediatrician"/>
-        <field name="photo" type="base64" file="hr_hospital/static/photo/3.jpeg"/>
+        <field name="image_1920" type="base64" file="hr_hospital/static/photo/3.jpeg"/>
     </record>
 
     <record id="doctor_intern_2" model="hr.hospital.doctor">
@@ -47,7 +47,7 @@
         <field name="is_intern">True</field>
         <field name="mentor_id" ref="doctor_anna"/>
         <field name="specialization_id" ref="specialization_surgeon"/>
-        <field name="photo" type="base64" file="hr_hospital/static/photo/5.jpeg"/>
+        <field name="image_1920" type="base64" file="hr_hospital/static/photo/5.jpeg"/>
     </record>
 
     <!-- Patients -->
