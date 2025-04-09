@@ -54,7 +54,8 @@
             <calendar string="Visit calendar"
                       date_start="scheduled_datetime"
                       date_stop="visit_date"
-                      color="status">
+                      color="status"
+                      mode="month">
                 <field name="patient_id"/>
                 <field name="doctor_id"/>
                 <field name="status"/>

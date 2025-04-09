@@ -47,12 +47,13 @@ class HRHPatientVisit(models.Model):
 
     @api.constrains('visit_date', 'doctor_id')
     def _check_visit_modification(self):
-        if self.status == 'done':
-            for visit in self:
-                if visit.visit_date and (
-                        visit.scheduled_datetime or visit.doctor_id):
-                    raise exceptions.ValidationError(_(
-                        "Can't change time or doctor"))
+        if self.env.context.get('install_mode'):
+            return
+        for visit in self:
+            if (visit.status == 'done'
+                    and (visit.visit_date
+                         and (visit.scheduled_datetime or visit.doctor_id))):
+                raise exceptions.ValidationError(_("Can't change time or doctor"))
 
     @api.constrains('scheduled_datetime', 'doctor_id', 'patient_id')
     def _check_single_visit_per_day(self):

@@ -58,6 +58,7 @@
         <field name="gender">male</field>
         <field name="birth_date">1990-06-15</field>
         <field name="doctor_id" ref="doctor_ivan"/>
+        <field name="phone">77654321</field>
     </record>
 
     <record id="patient_sophia" model="hr.hospital.patient">
@@ -122,6 +123,14 @@
         <field name="status">planned</field>
     </record>
 
+    <record id="patient_visit_5" model="hr.hospital.patient.visit">
+        <field name="patient_id" ref="patient_sophia"/>
+        <field name="doctor_id" ref="doctor_petr"/>
+        <field name="visit_date" eval="(DateTime.today() + relativedelta(days=0)).strftime('%Y-%m-%d %H:%M')"/>
+        <field name="scheduled_datetime" eval="(DateTime.today() + relativedelta(days=0)).strftime('%Y-%m-%d %H:%M')"/>
+        <field name="status">done</field>
+    </record>
+
     <!--  Diagnosis  -->
     <record id="diagnosis_1" model="hr.hospital.diagnosis">
         <field name="visit_id" ref="patient_visit_1"/>
@@ -176,4 +185,5 @@
         <field name="name">Weakness</field>
         <field name="diagnosis_date">2025-04-06</field>
     </record>
+
 </odoo>
