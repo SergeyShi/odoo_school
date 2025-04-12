@@ -81,7 +81,7 @@
                 <field name="specialization_id"/>
                 <field name="photo"/>
                 <field name="is_intern"/>
-                <field name="intern_ids"/>
+
                 <templates>
                     <t t-name="kanban-menu">
                         <t t-if="widget.editable">

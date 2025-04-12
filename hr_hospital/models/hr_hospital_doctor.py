@@ -26,6 +26,8 @@ class HRHDoctor(models.Model):
         inverse_name='mentor_id',
         string='Interns')
 
+    color = fields.Integer("Color Index")
+
     def action_create_visit(self):
         return {
             "type": "ir.actions.act_window",
