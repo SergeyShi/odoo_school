@@ -1,4 +1,5 @@
-from odoo import models, fields, api, _, ValidationError
+from odoo import models, fields, api, _
+from odoo.exceptions import ValidationError
 
 
 class Diagnosis(models.Model):
