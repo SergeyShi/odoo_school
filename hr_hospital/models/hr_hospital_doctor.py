@@ -12,7 +12,7 @@ class HRHDoctor(models.Model):
     last_name = fields.Char()
 
     first_name = fields.Char()
-    
+
     user_id = fields.Many2one(
         comodel_name='res.users',
         string='Related User',
