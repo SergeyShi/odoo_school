@@ -2,6 +2,9 @@ from odoo import models, fields, api, exceptions, _
 
 
 class HRHPatientVisit(models.Model):
+    """
+    Patient visit model. Contains information about the patient, doctor, disease, date, status, and diagnoses within the visit.
+    """
     _name = 'hr.hospital.patient.visit'
     _description = 'Patient visit'
     _rec_name = 'display_name'
@@ -39,6 +42,9 @@ class HRHPatientVisit(models.Model):
 
     @api.depends("patient_id", "visit_date")
     def _compute_display_name(self):
+        """
+        Computes the display name of the visit based on date and patient name.
+        """
         for rec in self:
             date_str = rec.visit_date.strftime(
                 "%d-%m-%Y %H:%M") if rec.visit_date else "New visit"
@@ -47,6 +53,9 @@ class HRHPatientVisit(models.Model):
 
     @api.constrains('visit_date', 'doctor_id')
     def _check_visit_modification(self):
+        """
+        Prevents changing the date or doctor for completed visits.
+        """
         if self.env.context.get('install_mode'):
             return
         for visit in self:
@@ -57,6 +66,9 @@ class HRHPatientVisit(models.Model):
 
     @api.constrains('scheduled_datetime', 'doctor_id', 'patient_id')
     def _check_single_visit_per_day(self):
+        """
+        Ensures that a patient does not have more than one visit to the same doctor per day.
+        """
         for visit in self:
             same_day_visits = self.search([
                 ('scheduled_datetime', '>=',
@@ -79,6 +91,9 @@ class HRHPatientVisit(models.Model):
 
     @api.ondelete(at_uninstall=False)
     def _check_delete_archival(self):
+        """
+        Prevents deletion or archiving of visits that have diagnoses.
+        """
         for visit in self:
             if visit.diagnosis_ids:
                 raise exceptions.ValidationError(_(

@@ -4,11 +4,13 @@
     <menuitem id="hr_hospital_main_menu"
               name="Hospital"
               sequence="100"
-              web_icon="hr_hospital,static/description/icon.png"/>
+              web_icon="hr_hospital,static/description/icon.png"
+              groups="base.group_user"/>
 
     <!-- Submenue -->
     <menuitem id="hr_hospital_menu_list"
               parent="hr_hospital_main_menu"
               name="Menu"
-              sequence="20"/>
+              sequence="20"
+              groups="base.group_user"/>
 </odoo>

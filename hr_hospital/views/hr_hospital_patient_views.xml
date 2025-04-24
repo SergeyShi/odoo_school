@@ -43,6 +43,7 @@
                             <field name="passport_data"/>
                             <field name="contact_person"/>
                             <field name="phone" widget="phone"/>
+                            <field name="user_id" groups="hr_hospital.group_hr_hospital_administrator"/>
                         </group>
                         <group>
                             <field name="photo" widget="image"
@@ -90,5 +91,6 @@
               name="Patients"
               parent="hr_hospital_menu_list"
               action="hr_hospital_patient_action"
-              sequence="40"/>
+              sequence="40"
+              groups="hr_hospital.group_hr_hospital_intern,hr_hospital.group_hr_hospital_doctor,hr_hospital.group_hr_hospital_manager,hr_hospital.group_hr_hospital_administrator"/>
 </odoo>

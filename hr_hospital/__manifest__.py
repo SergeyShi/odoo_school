@@ -15,6 +15,7 @@
         'python': [],
     },
     'data': [
+        'security/hr_hospital_security.xml',
         'security/ir.model.access.csv',
         'wizard/hr_hospital_patient_doctor_wizard_views.xml',
         'wizard/hr_hospital_disease_report_wizard_views.xml',

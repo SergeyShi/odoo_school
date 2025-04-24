@@ -3,6 +3,9 @@ from odoo.exceptions import ValidationError
 
 
 class HRHDisease(models.Model):
+    """
+    Disease model. Allows creating a hierarchical disease classifier for a medical institution.
+    """
     _name = 'hr.hospital.disease'
     _description = 'Disease'
     _parent_name = "parent_id"
@@ -32,6 +35,9 @@ class HRHDisease(models.Model):
 
     @api.depends('name', 'parent_id.complete_name')
     def _compute_complete_name(self):
+        """
+        Computes the full hierarchical name of the disease.
+        """
         for record in self:
             if record.parent_id:
                 record.complete_name = '%s / %s' % (
@@ -41,16 +47,25 @@ class HRHDisease(models.Model):
 
     @api.constrains('parent_id')
     def _check_category_recursion(self):
+        """
+        Prevents creation of recursive disease categories.
+        """
         if not self._check_recursion():
             raise ValidationError(_('You cannot create recursive categories.'))
 
     @api.model
     def name_create(self, name):
+        """
+        Creates a new disease record with the specified name.
+        """
         record = self.create({'name': name})
         return record.id, record.display_name
 
     @api.depends_context('hierarchical_naming')
     def _compute_display_name(self):
+        """
+        Computes the display name depending on the hierarchical naming context.
+        """
         if self.env.context.get('hierarchical_naming', True):
             super()._compute_display_name()
             return

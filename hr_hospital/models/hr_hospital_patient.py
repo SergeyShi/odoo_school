@@ -3,6 +3,9 @@ from odoo import models, fields, api
 
 
 class HRHPatient(models.Model):
+    """
+    Patient model. Contains personal data, doctor relationship, diagnosis history, and visit history.
+    """
     _name = 'hr.hospital.patient'
     _inherit = 'hr.hospital.person'
     _description = 'Patient'
@@ -14,6 +17,11 @@ class HRHPatient(models.Model):
     last_name = fields.Char()
 
     first_name = fields.Char()
+    
+    user_id = fields.Many2one(
+        comodel_name='res.users',
+        string='Related User',
+        help='User account linked to this patient')
 
     birth_date = fields.Date()
 
@@ -41,6 +49,9 @@ class HRHPatient(models.Model):
     contact_person = fields.Char()
 
     def action_open_patient_visits(self):
+        """
+        Opens the visit history for this patient.
+        """
         return {
             'type': 'ir.actions.act_window',
             'name': 'Visit history',
@@ -52,6 +63,9 @@ class HRHPatient(models.Model):
         }
 
     def action_create_visit(self):
+        """
+        Creates a new visit for the patient with automatic doctor assignment.
+        """
         visit_obj = self.env['hr.hospital.patient.visit']
 
         doctor = self.env['hr.hospital.doctor'].search([], limit=1)
@@ -77,11 +91,17 @@ class HRHPatient(models.Model):
 
     @api.depends('first_name', 'last_name')
     def _compute_name(self):
+        """
+        Computes the patient's full name based on first and last name.
+        """
         for record in self:
             record.name = f'{record.first_name} {record.last_name}'
 
     @api.depends('birth_date')
     def _compute_age(self):
+        """
+        Computes the patient's age based on the birth date.
+        """
         for patient in self:
             if patient.birth_date:
                 today = date.today()

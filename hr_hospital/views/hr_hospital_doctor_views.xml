@@ -28,6 +28,7 @@
                     <group>
                         <field name="is_intern"/>
                         <field name="mentor_id" invisible="not is_intern"/>
+                        <field name="user_id" groups="hr_hospital.group_hr_hospital_administrator"/>
                     </group>
                     <group string="Interns" invisible="not intern_ids">
                         <field name="intern_ids" string="" mode="kanban"/>

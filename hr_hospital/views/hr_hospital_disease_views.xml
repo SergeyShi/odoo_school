@@ -61,6 +61,7 @@
     <menuitem id="hr_hospital_menu_disease"
               action="hr_hospital_disease_action"
               parent="hr_hospital_menu_list"
-              name="Diseases" sequence="40"/>
+              name="Diseases" sequence="40"
+              groups="hr_hospital.group_hr_hospital_intern,hr_hospital.group_hr_hospital_doctor,hr_hospital.group_hr_hospital_manager,hr_hospital.group_hr_hospital_administrator"/>
 
 </odoo>

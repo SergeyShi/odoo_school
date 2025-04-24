@@ -3,6 +3,9 @@ from odoo.exceptions import ValidationError
 
 
 class Diagnosis(models.Model):
+    """
+    Diagnosis model. Contains information about the diagnosis, patient, doctor, date, disease, and approval status.
+    """
     _name = 'hr.hospital.diagnosis'
     _description = 'Diagnosis'
 
@@ -44,6 +47,9 @@ class Diagnosis(models.Model):
 
     @api.depends('visit_id')
     def _compute_data(self):
+        """
+        Sets the doctor and diagnosis date based on the related visit.
+        """
         for record in self:
             if record.visit_id:
                 record.doctor_id = record.visit_id.doctor_id.id
@@ -51,6 +57,9 @@ class Diagnosis(models.Model):
 
     @api.constrains('approved')
     def _check_mentor_approval(self):
+        """
+        Ensures that an intern's diagnosis is approved by a mentor.
+        """
         for record in self:
             doctor = record.visit_id.doctor_id
             if (doctor.is_intern and record.approved
