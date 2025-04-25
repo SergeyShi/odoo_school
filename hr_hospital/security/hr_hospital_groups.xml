@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Define category for hospital security groups -->
+    <record id="module_category_hr_hospital" model="ir.module.category">
+        <field name="name">Hospital</field>
+        <field name="description">User access level for the Hospital module</field>
+        <field name="sequence">10</field>
+    </record>
+
+    <!-- Patient Group - Base level access -->
+    <record id="group_hr_hospital_patient" model="res.groups">
+        <field name="name">Patient</field>
+        <field name="category_id" ref="module_category_hr_hospital"/>
+        <field name="comment">Basic access for patients</field>
+    </record>
+
+    <!-- Intern Group - Inherits from Patient -->
+    <record id="group_hr_hospital_intern" model="res.groups">
+        <field name="name">Intern</field>
+        <field name="category_id" ref="module_category_hr_hospital"/>
+        <field name="implied_ids" eval="[(4, ref('group_hr_hospital_patient'))]"/>
+        <field name="comment">Access for intern doctors</field>
+    </record>
+
+    <!-- Doctor Group - Inherits from Intern -->
+    <record id="group_hr_hospital_doctor" model="res.groups">
+        <field name="name">Doctor</field>
+        <field name="category_id" ref="module_category_hr_hospital"/>
+        <field name="implied_ids" eval="[(4, ref('group_hr_hospital_intern'))]"/>
+        <field name="comment">Access for doctors</field>
+    </record>
+
+    <!-- Manager Group - Inherits from Doctor -->
+    <record id="group_hr_hospital_manager" model="res.groups">
+        <field name="name">Manager</field>
+        <field name="category_id" ref="module_category_hr_hospital"/>
+        <field name="implied_ids" eval="[(4, ref('group_hr_hospital_doctor'))]"/>
+        <field name="comment">Access for hospital managers</field>
+    </record>
+
+    <!-- Administrator Group - Inherits from Manager -->
+    <record id="group_hr_hospital_administrator" model="res.groups">
+        <field name="name">Administrator</field>
+        <field name="category_id" ref="module_category_hr_hospital"/>
+        <field name="implied_ids" eval="[(4, ref('group_hr_hospital_manager'))]"/>
+        <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+        <field name="comment">Full access to all hospital features</field>
+    </record>
+</odoo>
