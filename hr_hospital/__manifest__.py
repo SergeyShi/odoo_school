@@ -9,6 +9,8 @@
 
     'depends': [
         'base',
+        'web',
+        'website',
     ],
 
     'external_dependencies': {
