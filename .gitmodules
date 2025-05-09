@@ -1,0 +1,3 @@
+[submodule "it_outsource"]
+	path = it_outsource
+	url = git@github.com:SergeyShi/odoo_school.git
