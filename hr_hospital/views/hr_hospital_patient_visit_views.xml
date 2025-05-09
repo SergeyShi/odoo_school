@@ -1,37 +1,108 @@
 <odoo>
+    <!-- List form -->
     <record id="hr_hospital_visit_tree_view" model="ir.ui.view">
         <field name="name">hr.hospital.patient.visit.tree</field>
         <field name="model">hr.hospital.patient.visit</field>
         <field name="arch" type="xml">
             <tree>
-                <field name="patient_id"/>
-                <field name="doctor_id"/>
-                <field name="disease_id"/>
+                <field name="status"/>
+                <field name="scheduled_datetime"/>
                 <field name="visit_date"/>
+                <field name="doctor_id"/>
+                <field name="patient_id"/>
+                <field name="diagnosis_ids"/>
             </tree>
         </field>
     </record>
 
+    <!-- Create/edit form -->
     <record id="hr_hospital_visit_form_view" model="ir.ui.view">
         <field name="name">hr.hospital.patient.visit.form</field>
         <field name="model">hr.hospital.patient.visit</field>
         <field name="arch" type="xml">
             <form>
                 <sheet>
+                    <header>
+                        <field name="status" widget="statusbar"
+                               options="{'clickable':'1'}"/>
+                    </header>
                     <group>
-                        <field name="patient_id"/>
-                        <field name="doctor_id"/>
-                        <field name="disease_id"/>
-                        <field name="visit_date"/>
+                        <group>
+                            <field name="scheduled_datetime"/>
+                            <field name="visit_date"/>
+                            <field name="doctor_id"/>
+                            <field name="patient_id"/>
+                            <separator/>
+                        </group>
+                        <sheet>
+                            <group string="Diagnosis">
+                                <field name="diagnosis_ids" string=""/>
+                            </group>
+                        </sheet>
                     </group>
                 </sheet>
+
             </form>
+        </field>
+    </record>
+
+    <!-- Calendar -->
+    <record id="hr_hospital_patient_visit_calendar" model="ir.ui.view">
+        <field name="name">hr.hospital.patient.visit.calendar</field>
+        <field name="model">hr.hospital.patient.visit</field>
+        <field name="arch" type="xml">
+            <calendar string="Visit calendar"
+                      date_start="scheduled_datetime"
+                      date_stop="visit_date"
+                      color="status"
+                      mode="month">
+                <field name="patient_id"/>
+                <field name="doctor_id"/>
+                <field name="status"/>
+            </calendar>
+        </field>
+    </record>
+
+    <!-- Search -->
+    <record id="hr_hospital_patient_visit_search" model="ir.ui.view">
+        <field name="name">hr.hospital.patient.visit.search
+            (hr_hospital_patient_visit)
+        </field>
+        <field name="model">hr.hospital.patient.visit</field>
+        <field name="arch" type="xml">
+            <search string="Filters">
+                <field name="patient_id"/>
+                <field name="doctor_id"/>
+                <filter name="filter_date" date="visit_date"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_by_status" string="Status"
+                        context="{'group_by' : 'status'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="hr_hospital_patient_visit_pivot" model="ir.ui.view">
+        <field name="name">hr.hospital.patient.visit.pivot</field>
+        <field name="model">hr.hospital.patient.visit</field>
+        <field name="arch" type="xml">
+            <pivot string="Patient visit" sample="1" display_quantity="1">
+                <field name="visit_date" interval="month" type="col"/>
+                <field name="status" type="col"/>
+                <field name="doctor_id" type="row"/>
+            </pivot>
         </field>
     </record>
 
     <record id="hr_hospital_visit_action" model="ir.actions.act_window">
         <field name="name">Patient Visits</field>
         <field name="res_model">hr.hospital.patient.visit</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">tree,form,calendar,pivot</field>
     </record>
+
+    <menuitem id="hr_hospital_visit_menu"
+              name="Visits"
+              parent="hr_hospital_menu_list"
+              action="hr_hospital_visit_action"
+              sequence="50"/>
 </odoo>
